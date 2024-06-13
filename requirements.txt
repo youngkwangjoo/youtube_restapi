@@ -1,6 +1,6 @@
 django>=5.0.1,<6.0.0 # 5.0.1 이상 6.0.0 미만
 djangorestframework>=3.14.0,<4.0.0
-
+psycopg2-binary>=2.9.9,<3.0 #psycopg2 postgreSQL connecorcod
 #필수 패키지 정의: 프로젝트에 필요한 모든 Python 패키지와 버전을 명시적으로 정의합니다.expand_more
 # 재현성 보장: 다른 사용자가 이미지를 실행할 때 동일한 Python 환경을 만들 수 있도록 합니다.
 # 패키지 관리 단순화: pip install 명령어 없이도 Docker 이미지 빌드 과정에서 자동으로 패키지를 설치합니다.
