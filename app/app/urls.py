@@ -17,10 +17,15 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from drf_spectacular.views import SpectacularAPIView, SpectacularRedocView, SpectacularSwaggerView
+from chat.views import ChatRoomList, ChatMessageList, show_html
+
 
 urlpatterns = [
 
     path('api/v1/schema/', SpectacularAPIView.as_view(), name='schema'),
     path('api/v1/schema/swagger-ui/', SpectacularSwaggerView.as_view(url_name='schema'), name='swagger-ui'),
     path('api/v1/schema/redoc/', SpectacularRedocView.as_view(url_name='schema'), name='redoc'),
+    path('room/', ChatRoomList.as_view(), name='room-list'),
+    path('<int:room_id>/messages', ChatMessageList.as_view(), name='message-list'),
+    path('chatting', show_html, name='chatting')
 ]

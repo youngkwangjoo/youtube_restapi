@@ -21,12 +21,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-)6(p3kgmlod(_or1k(l(t5#lp9==%*-y@=fl-sl_@or$w4ld1f'
-
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-
-ALLOWED_HOSTS = []
+SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'test')
+DEBUG = bool(int(os.environ.get('DEBUG', 0))) # 0: False
+ALLOWED_HOSTS = ['*'] # ex) ec2-123-123-123
 
 
 # Application definition
@@ -48,7 +45,9 @@ CUSTOM_USER_APPS = [
     'subscriptions.apps.SubscriptionsConfig',
     'reactions.apps.ReactionsConfig',
     'rest_framework',
-    'drf_spectacular'
+    'drf_spectacular',
+    'channels',
+	'chat.apps.ChatConfig'
 ]
 
 INSTALLED_APPS = CUSTOM_USER_APPS + DJANGO_SYSTEM_APPS
@@ -86,6 +85,12 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'app.wsgi.application'
+
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels.layers.InMemoryChannelLayer"
+    },
+	}
 
 
 # Database
@@ -145,3 +150,10 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'users.User'
+
+STATIC_URL = '/static/static/'
+MEDIA_URL = '/static/media/'
+
+MEDIA_ROOT = '/vol/web/media'
+STATIC_ROOT = '/vol/web/static'
+ASGI_APPLICATION = 'app.routes.application'
